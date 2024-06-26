@@ -73,15 +73,27 @@
             text-align: left;
             margin-top: 20px;
         }
+        .toggle-button-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
         .toggle-button {
-            display: block;
-            margin: 20px auto;
+            display: flex;
+            border: 1px solid #333;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .toggle-option {
             padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: 600;
+        }
+        .toggle-option.selected {
             background-color: #333;
             color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
         }
     </style>
 </head>
@@ -89,7 +101,12 @@
     <h1>ZM Dance</h1>
     <p>Announcement: Rumba lesson on 06/30 will be cancelled.</p>
     <h2>Course Schedule</h2>
-    <button class="toggle-button" onclick="toggleSchedule()">Show Kid Lessons</button>
+    <div class="toggle-button-container">
+        <div class="toggle-button">
+            <div class="toggle-option selected" id="toggle-adult" onclick="toggleSchedule('adult')">Adult</div>
+            <div class="toggle-option" id="toggle-kid" onclick="toggleSchedule('kid')">Kid</div>
+        </div>
+    </div>
     <table id="schedule-table">
         <tr>
             <th>Day</th>
@@ -109,12 +126,13 @@
         </ul>
     </div>
     <script>
-        let showAdult = true;
+        let currentSchedule = 'adult';
 
-        function toggleSchedule() {
-            showAdult = !showAdult;
-            document.querySelector('.toggle-button').textContent = showAdult ? 'Show Kid Lessons' : 'Show Adult Lessons';
-            populateTable('schedule-table', showAdult ? 'schedule_adult.json' : 'schedule_kid.json');
+        function toggleSchedule(scheduleType) {
+            currentSchedule = scheduleType;
+            document.getElementById('toggle-adult').classList.toggle('selected', scheduleType === 'adult');
+            document.getElementById('toggle-kid').classList.toggle('selected', scheduleType === 'kid');
+            populateTable('schedule-table', scheduleType === 'adult' ? 'schedule_adult.json' : 'schedule_kid.json');
         }
 
         function calculateProgress(startDate, endDate) {

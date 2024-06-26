@@ -1,4 +1,14 @@
-cd /Users/muchangduan/documents/website_html
+cd /Users/muchangduan/documents/duan22m.github.io
 python -m http.server
 
 Access the website at http://localhost:8000 in your web browser.
+
+
+GitHub address of website:
+https://duan22m.github.io/
+
+for pushing changes to git (add, commit, push):
+（first change the directory to duan22m.github.io or wherever)
+git add -A
+git commit -m "comment for the specific update"
+git push origin main
