@@ -1,0 +1,38 @@
+{
+    "classes": [
+        {
+            "type": "Group Latin",
+            "packages": [
+                { "description": "Single class", "price": 30, "classes": 1 },
+                { "description": "8 classes (use within 6 months)", "price": 224, "classes": 8 },
+                { "description": "16 classes (use within 6 months)", "price": 384, "classes": 16 },
+                { "description": "32 classes (use within 10 months)", "price": 704, "classes": 32 }
+            ]
+        },
+        {
+            "type": "Group Jazz",
+            "packages": [
+                { "description": "pay as you go, 4-6 classes per cycle", "price": 30, "classes": 1 }
+            ]
+        },
+        {
+            "type": "Private Lessons",
+            "packages": [
+                { "description": "Single Class", "singleClass": true, "prices": [
+                    { "people": 1, "price": 100 },
+                    { "people": 2, "price": 55 },
+                    { "people": 3, "price": 50 },
+                    { "people": 4, "price": 45 },
+                    { "people": 5, "price": 40 }
+                ]},
+                { "description": "Package of 12 Classes (10% off)", "singleClass": false, "prices": [
+                    { "people": 1, "price": 90 },
+                    { "people": 2, "price": 49.5 },
+                    { "people": 3, "price": 45 },
+                    { "people": 4, "price": 40.5 },
+                    { "people": 5, "price": 36 }
+                ]}
+            ]
+        }
+    ]
+}

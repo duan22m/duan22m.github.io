@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZM Dance Studio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
     <style>
         body {
             background-color: #f9f9f9;
@@ -95,9 +96,69 @@
             background-color: #333;
             color: white;
         }
+        /* Navigation bar styles */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+        }
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+        }
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar ul li {
+            margin-left: 20px;
+        }
+        .navbar ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        .navbar ul li a:hover {
+            color: #0073e6;
+        }
+        .explore-link {
+            display: flex;
+            align-items: center;
+            border: 1px solid #333;
+            border-radius: 50px;
+            padding: 5px 10px;
+        }
+        .explore-link .icon {
+            margin-right: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border: 1px solid #333;
+            border-radius: 50%;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
+    <div class="navbar">
+        <div class="logo">ZM Dance</div>
+        <ul>
+            <li><a href="#explore" class="explore-link"><span class="icon"><i class="fas fa-question-circle"></i></span>Explore</a></li>
+            <li><a href="#schedule">Course Schedule</a></li>
+            <li><a href="price.html">Our Price</a></li>
+        </ul>
+    </div>
     <h1>ZM Dance</h1>
     <p>Announcement: Rumba lesson on 06/30 will be cancelled.</p>
     <h2>Course Schedule</h2>

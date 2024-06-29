@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            font-family: 'Arial', sans-serif;
+        }
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+        }
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar ul li {
+            margin-left: 20px;
+        }
+        .navbar ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        .navbar ul li a:hover {
+            color: #0073e6;
+        }
+        .explore-link {
+            display: flex;
+            align-items: center;
+            border: 1px solid #333;
+            border-radius: 50px;
+            padding: 5px 10px;
+        }
+        .explore-link .icon {
+            margin-right: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border: 1px solid #333;
+            border-radius: 50%;
+            font-size: 16px;
+        }
+        .price-container {
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+        }
+        .class-type {
+            margin-bottom: 20px;
+        }
+        .class-type h2 {
+            margin-bottom: 10px;
+        }
+        .packages {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .package {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 5px;
+            flex: 1 1 200px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .package h3 {
+            margin-top: 0;
+        }
+        .package .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        .package .details {
+            margin-top: 5px;
+            color: #666;
+        }
+        .price-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .price-table th, .price-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        .price-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">ZM Dance</div>
+        <ul>
+            <li><a href="index.html">Course Schedule</a></li>
+            <li><a href="price.html">Our Price</a></li>
+            <li><a href="#explore" class="explore-link"><span class="icon"><i class="fas fa-question-circle"></i></span>Explore</a></li>
+        </ul>
+    </div>
+
+    <div class="price-container" id="price-container">
+        <!-- The content will be dynamically inserted here by JavaScript -->
+    </div>
+
+    <script>
+        async function loadPrices() {
+            try {
+                const response = await fetch('price.json');
+                const data = await response.json();
+                
+                const priceContainer = document.getElementById('price-container');
+                priceContainer.innerHTML = data.classes.map(classType => renderClassType(classType)).join('');
+            } catch (error) {
+                console.error('Error loading price data:', error);
+            }
+        }
+
+        function renderClassType(classType) {
+            if (classType.type === 'Private Lessons') {
+                return renderPrivateLessons(classType);
+            } else {
+                return `
+                    <div class="class-type">
+                        <h2>${classType.type}</h2>
+                        <div class="packages">
+                            ${classType.packages.map(pkg => renderPackage(pkg)).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function renderPackage(pkg) {
+            const perClassPrice = pkg.price ? `$${(pkg.price / (pkg.classes || 1)).toFixed(2)}/class` : '';
+            const discountDetails = pkg.discount ? `(${(pkg.discount * 100).toFixed(0)}% off for ${pkg.classes} classes)` : '';
+
+            return `
+                <div class="package">
+                    <h3>${pkg.description}</h3>
+                    <div class="price">${pkg.price ? `$${pkg.price}` : ''}</div>
+                    <div class="details">
+                        ${perClassPrice}
+                        ${discountDetails}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderPrivateLessons(classType) {
+            const singleClassPrices = classType.packages.find(pkg => pkg.singleClass).prices;
+            const packagePrices = classType.packages.find(pkg => !pkg.singleClass).prices;
+
+            return `
+                <div class="class-type">
+                    <h2>${classType.type}</h2>
+                    <div class="packages">
+                        <div class="package">
+                            <h3>Single Class</h3>
+                            <table class="price-table">
+                                <thead>
+                                    <tr>
+                                        <th>Number of People</th>
+                                        <th>Price per Person per Class</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${singleClassPrices.map(price => `
+                                        <tr>
+                                            <td>${price.people}</td>
+                                            <td>$${price.price.toFixed(0)}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="package">
+                            <h3>Package of 12 Classes (10% off)</h3>
+                            <table class="price-table">
+                                <thead>
+                                    <tr>
+                                        <th>Number of People</th>
+                                        <th>Price per Person per Class</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${packagePrices.map(price => `
+                                        <tr>
+                                            <td>${price.people}</td>
+                                            <td>$${price.price.toFixed(0)}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        window.onload = loadPrices;
+    </script>
+</body>
+</html>

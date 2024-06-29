@@ -12,3 +12,12 @@ for pushing changes to git (add, commit, push):
 git add -A
 git commit -m "comment for the specific update"
 git push origin main
+
+to do:
+add sign-in feature
+make more compact for mobile display
+add teacher info
+add class selection - poll
+add chatbot
+add lesson price
+add WeChat qr code
